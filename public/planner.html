@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2f7d4f">
+<title>📋 پلنر روزانه</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗓️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="planner.css">
+</head>
+<body>
+<main id="app">
+  <div class="brand"><h1>پلنر روزانه</h1><p>یک روز منظم، یک زندگی بهتر ✨</p></div>
+  <header>
+    <div><div id="wd" class="wd"></div><div id="jd" class="muted"></div></div>
+    <button class="icon" id="sb" aria-label="تنظیمات حساب">⚙️</button>
+  </header>
+
+  <div id="vDay">
+    <nav class="dates">
+      <button class="icon" id="pv" aria-label="روز قبل">›</button>
+      <button id="td">امروز</button>
+      <button class="icon" id="nx" aria-label="روز بعد">‹</button>
+    </nav>
+    <p id="cn" class="note" hidden></p>
+    <section class="card prog">
+      <div><b id="pc">۰٪</b><span class="muted" id="pt"></span></div>
+      <div class="bar"><i id="pf"></i></div>
+    </section>
+    <section class="card">
+      <h2>سه اولویت امروز</h2>
+      <input class="pr" id="p1" placeholder="اولویت اول" maxlength="200">
+      <input class="pr" id="p2" placeholder="اولویت دوم" maxlength="200">
+      <input class="pr" id="p3" placeholder="اولویت سوم" maxlength="200">
+    </section>
+    <section class="card">
+      <div class="row"><h2>کارهای امروز</h2><button class="link" id="cr">انتقال کارهای مانده</button></div>
+      <div id="ch" class="chips"></div>
+      <ul id="tl"></ul>
+      <form id="tf">
+        <input id="tt" placeholder="کار جدید…" maxlength="200" required>
+        <div class="opts">
+          <select id="tc" aria-label="دسته‌بندی"></select>
+          <select id="tp" aria-label="اهمیت"><option value="2">مهم</option><option value="1" selected>معمولی</option><option value="0">کم‌اهمیت</option></select>
+        </div>
+        <div class="opts"><input id="tm" type="time" aria-label="ساعت"><button class="primary">افزودن</button></div>
+      </form>
+    </section>
+    <section class="card"><h2>آب بخور نمیری</h2><div id="wt" class="water"></div></section>
+    <section class="card"><h2>حال و هوای امروز</h2><div id="md" class="mood"></div></section>
+    <section class="card"><h2>یادداشت</h2><textarea id="nt" rows="4" placeholder="چون الزایمر داری میتونی اینجا نوت بزاری"></textarea></section>
+  </div>
+
+  <div id="vWeek" hidden>
+    <nav class="dates">
+      <button class="icon" id="wp" aria-label="هفته قبل">›</button>
+      <button id="wnow">این هفته</button>
+      <button class="icon" id="wn" aria-label="هفته بعد">‹</button>
+    </nav>
+    <section class="card">
+      <h2 id="wr"></h2><p id="wsum" class="muted"></p>
+      <div class="dash"><div id="wc" class="bars"></div><div id="wdonut"></div></div>
+    </section>
+    <div id="wrings" class="rings"></div>
+    <section class="card" id="wmood"></section>
+    <section class="card"><h2>پیشرفت بر اساس دسته‌بندی</h2><div id="wcat"></div></section>
+    <div id="wdays"></div>
+  </div>
+
+  <div id="vCycle" hidden>
+    <section class="card" id="cs"></section>
+    <section class="card">
+      <h2>ثبت دوره جدید</h2>
+      <div class="opts">
+        <label class="half">شروع<input type="date" id="ps"></label>
+        <label class="half">پایان (اختیاری)<input type="date" id="pe"></label>
+      </div>
+      <p id="pr2" class="err"></p>
+      <button class="primary" id="pa">ثبت</button>
+    </section>
+    <section class="card"><h2>سابقه</h2><ul id="pl"></ul></section>
+    <p class="muted">تو ک کلا پریودی ولی این تقریبی حساب میکنه</p>
+  </div>
+  <p id="sv" class="muted save"></p>
+</main>
+
+<nav id="tabs">
+  <button data-v="day" class="on"><span>📅</span>امروز</button>
+  <button data-v="week"><span>📊</span>هفته</button>
+  <button data-v="cycle"><span>🩸</span></button>
+</nav>
+
+<dialog id="dlg">
+  <form method="dialog" id="af">
+    <h2>حساب کاربری</h2>
+    <p id="an" class="warn" hidden>هنوز از نام کاربری و رمز پیش‌فرض استفاده می‌کنید. لطفاً رمز جدید بگذارید.</p>
+    <label>رمز فعلی<input id="ac" type="password" autocomplete="current-password" required></label>
+    <label>نام کاربری جدید<input id="au" autocomplete="username"></label>
+    <label>رمز جدید (اختیاری)<input id="ap" type="password" autocomplete="new-password"></label>
+    <p id="ae" class="err"></p>
+    <div class="opts"><button class="primary" id="as" type="button">ذخیره</button><button id="ax" type="button">بستن</button><button class="danger" id="lo" type="button">خروج</button></div>
+  </form>
+</dialog>
+<script src="planner.js"></script>
+</body>
+</html>
